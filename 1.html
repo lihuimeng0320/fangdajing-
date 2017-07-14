@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>放大镜</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+        #small{
+            float:left;
+            position:relative;
+            top:0;
+            left:0;
+        }
+
+        #big{
+            display:none;
+            width:400px;
+            height:400px;
+            overflow: hidden;
+            float:left;
+            position:relative;
+        }
+        #div{
+            width:200px;
+            height:200px;
+            background: aquamarine;
+            opacity: 0.5;
+            filter:alpha(opacity=50);
+            position:absolute;
+            top:0;
+            left:0;
+            display:none;
+        }   #big img{
+                position: absolute;
+                top: 0;
+                left: 0;
+            }
+    </style>
+</head>
+<body>
+<div id="small">
+    <img src="1.jpg" alt="" >
+    <div id="div">  </div>
+</div>
+<div id="big">
+    <img src="2.jpg" alt="" id="img" >
+</div>
+<script>
+    var oSma=document.getElementById("small");
+    var oBig=document.getElementById("big");
+    var oBigImg=oBig.getElementsByTagName("img")[0];
+    var oDiv=document.getElementById("div");
+    oSma.onmouseover=function(){
+        oBig.style.display="block";
+        oDiv.style.display="block";
+    };
+    oSma.onmouseout=function(){
+        oBig.style.display="none";
+        oDiv.style.display="none";
+    };
+    oDiv.onmousemove=function(e){
+        var left= e.clientX-oDiv.offsetWidth/2;
+        var top= e.clientY-oDiv.offsetHeight/2;
+        var maxX=oBig.offsetWidth-oDiv.offsetWidth;
+        var maxy=oBig.offsetHeight-oDiv.offsetHeight;
+        if(left<=0){
+            left=0;
+        }
+        if(top<=0){
+            top=0;
+        }
+        if(left>=maxX){
+            left=maxX;
+        }
+        if(top>=maxy){
+            top=maxy;
+        }
+        oDiv.style.left=left+"px";
+        oDiv.style.top=top+"px";
+
+
+        var xx=left/maxX;
+        var yy=top/maxy;
+
+        oBigImg.style.left=-xx*(oBigImg.offsetWidth-oBig.offsetWidth)+"px";
+        oBigImg.style.top=-yy*(oBigImg.offsetHeight-oBig.offsetHeight)+"px";
+
+    };
+
+
+</script>
+
+</body>
+</html>
